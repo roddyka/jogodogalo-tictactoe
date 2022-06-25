@@ -37,7 +37,7 @@ export default function App() {
 
 
   // const myObjArray = [{id: 'player', name: 'pontos'}];
-  
+  const [turnChangeState, setTurnChangeState] = useState(0);
   let turnChange = false;
   let endgame_validate = false;
 
@@ -73,6 +73,7 @@ export default function App() {
       setPlayer2('X');
     }
     setLast(9);
+    setTurnChangeState(1);
     setTable([
       ['','',''],
       ['','',''],
@@ -89,14 +90,15 @@ export default function App() {
     setPlayer1(player === 'X' ? 'O' : 'X');
     checkWinner(table, line, column, player1, player2);
     
-    let RandomNumberLine = Math.floor(Math.random() * 3 ) ;
-    let RandomNumberColumn = Math.floor(Math.random() * 3 ) ;
+    let RandomNumberLine = Math.floor(Math.random() * 3 );
+    let RandomNumberColumn = Math.floor(Math.random() * 3 );
     enemyPlaying(player2, RandomNumberLine, RandomNumberColumn);
   }
 
   //inimigo jogando
   function enemyPlaying(player, RandomNumberLine, RandomNumberColumn ){
     turnChange = true;
+    setTurnChangeState(2);
       if(endgame_validate === false){
         console.log('enemy?');
         let table_position = table[RandomNumberLine][RandomNumberColumn].length;
@@ -107,8 +109,10 @@ export default function App() {
           enemyPlaying(player, RandomNumberLine, RandomNumberColumn);
         }else {
           setTimeout(() => {
+            
             if(turnChange){
               play(RandomNumberColumn, RandomNumberLine, player);
+              setTurnChangeState(1);
               // console.log(table[RandomNumberLine][RandomNumberColumn].length);
             }
             turnChange = false;
@@ -126,6 +130,7 @@ export default function App() {
 
  //checkando qem é o vencedor
   function checkWinner(table, line, column, player1, player2){
+    // setTurnChangeState(2);
     console.log('checking...');
     //linha
     if(table[line][0] !== '' && table[line][0] === table[line][1] && table[line][1] === table[line][2]){
@@ -200,7 +205,6 @@ export default function App() {
     return (
       <View style={styles.container}>
         <Text style={styles.title}>Jogo do galo</Text>
-
         {
           table.map((line, numberline) => {
             return (
@@ -211,7 +215,7 @@ export default function App() {
                     key={numberColumn} 
                     style={styles.touchable} 
                     onPress={()=>play(numberColumn,numberline, player1)}
-                    disabled={column !== '' ? true : ({turnChange} === 0 ? true : '')}
+                    disabled={(column !== '' ? true : '')}
                     >
                       {
                         column === 'O' &&
@@ -228,7 +232,7 @@ export default function App() {
             )
           })
         }
-
+        <Text>{turnChangeState === 2 ? 'Computer playing' : ''}</Text>
         <TouchableOpacity style={styles.backtoMenu} onPress={()=>setScreen('menu')}>
           <Text style={styles.backtoMenuText} >Reiniciar</Text>
         </TouchableOpacity>
