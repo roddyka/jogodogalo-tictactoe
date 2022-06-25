@@ -1,0 +1,34 @@
+{
+  "expo": {
+    "name": "jogo-do-galo",
+    "slug": "jogo-do-galo",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/galo.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/jogodogalogames.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/galo.png",
+        "backgroundColor": "#FFFFFF"
+      },
+      "package": "galogame.expo.client"
+    },
+    "web": {
+      "favicon": "./assets/galo.png"
+    }
+  }
+}
